@@ -421,7 +421,7 @@ impl Config {
                                             }
                                         };
 
-                                        if let Err(_) = f.read(&mut buf) {
+                                        if let Err(_) = f.read_to_end(&mut buf) {
                                             let error_str = "Issue when reading image file.";
                                             return Err(Error::new(&self.name, &self.opts, Some(error_str), 2));
                                         }
@@ -430,7 +430,7 @@ impl Config {
                                     else if let Data::StdIn = d {
                                         let mut stdin = io::stdin();
 
-                                        if let Err(_) = stdin.read(&mut buf) {
+                                        if let Err(_) = stdin.read_to_end(&mut buf) {
                                             let error_str = "Issue when reading stdin.";
                                             return Err(Error::new(&self.name, &self.opts, Some(error_str), 2));
                                         }
@@ -438,7 +438,8 @@ impl Config {
 
                                     else { panic!("d isn't a file or stdin (image)"); }
 
-                                    let reader = Reader::new(Cursor::new(&buf));
+                                    let reader = Reader::new(Cursor::new(&buf))
+                                        .with_guessed_format().expect("'cursor io never fails'");
                                     let mimetype = match reader.format() {
                                         Some(ImageFormat::Png) => MimeType::Png,
                                         Some(ImageFormat::Jpeg) => MimeType::Jpeg,
@@ -514,7 +515,7 @@ impl Config {
                     }
                 }
 
-                if did_print {
+                if !did_print {
                     println!("{}", printout(&(*tag)));
                 }
             }

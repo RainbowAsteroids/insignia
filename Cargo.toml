@@ -1,8 +1,15 @@
 [package]
 name = "insignia"
-version = "0.1.0"
 authors = ["Rainbow Asteroids <rainbow@portal2d.xyz>"]
+description = "A CLI tool to view and modify the metadata of music files"
+keywords = ["music", "metadata", "tags", "cli"]
+catagories = ["command-line-utilities", "multimedia", "mutlimedia::audio"]
+repository = "https://gitea.portal2d.xyz/RainbowAsteroids/insignia"
+readme = "README.md"
+version = "0.1.0"
+license = "GPL-3.0-only"
 edition = "2018"
+exclude = ["*flac", "*mp3", "*png"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
